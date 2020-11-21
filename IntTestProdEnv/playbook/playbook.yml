@@ -1,0 +1,42 @@
+# vim: ts=2
+---
+- hosts: all
+  remote_user: vagrant
+  become: yes
+  become_method: sudo
+    
+  
+  vars:
+    vHome: /home/vagrant
+      
+  tasks:
+
+  - include_role:
+      name: gitlab
+
+  - include_role:
+      name: docker
+
+  - name: Install nmap
+    apt:
+      name: nmap
+      state: latest
+
+  - command: sed 's/external_url http:\/\/hostname/external_url \'http://192.168.33.9/gitlab\'/' /etc/gitlab/gitlab.rb
+  - command: sed 's/unicorn[\'port\'] = 8080/unicorn[\'port\'] = 8088/' /etc/gitlab/gitlab.rb
+
+  - command: gitlab-ctl reconfigure
+  - command: gitlab-ctl restart unicorn
+  - command: gitlab-ctl restart
+  
+  - name: Add user to docker group
+    user:
+      name: vagrant
+      group: docker
+
+  - name: Running docker operations
+    docker:
+      name: TomCat7
+      image: hello-world
+      state: started
+      volumes:
