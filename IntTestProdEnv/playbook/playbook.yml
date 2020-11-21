@@ -17,26 +17,40 @@
   - include_role:
       name: docker
 
-  - name: Install nmap
+  - name: Install python2.7
     apt:
-      name: nmap
-      state: latest
+      name: python2.7
+      state: present
 
-  - command: sed 's/external_url http:\/\/hostname/external_url \'http://192.168.33.9/gitlab\'/' /etc/gitlab/gitlab.rb
-  - command: sed 's/unicorn[\'port\'] = 8080/unicorn[\'port\'] = 8088/' /etc/gitlab/gitlab.rb
+  - name: Install python-pip
+    apt:
+      name: python3-pip
+      state: present
 
-  - command: gitlab-ctl reconfigure
-  - command: gitlab-ctl restart unicorn
-  - command: gitlab-ctl restart
-  
+  - name: Install docker
+    pip:
+      name: docker
+
   - name: Add user to docker group
     user:
       name: vagrant
       group: docker
 
-  - name: Running docker operations
-    docker:
+  - name: Run Tomcat container
+    community.general.docker_container:
       name: TomCat7
-      image: hello-world
+      image: tomcat
       state: started
-      volumes:
+      volumes: 
+        - /tomcat_data:/usr/local/tomcat/webapps
+        - /tomcat_conf:/usr/local/tomcat/confbis
+      ports:
+        - "8888:8080"
+
+  - name: Add GitLab Runner to keyring
+    shell: curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh | sudo bash
+
+  - name: Install GitLab Runner
+    apt:
+      name: gitlab-runner
+      state: present

@@ -1,0 +1,51 @@
+image: maven:latest
+
+stages:
+  - build
+  - test
+  - package
+  - upload
+  - deploy
+
+cache:
+  paths:
+    - target/
+
+build_app:
+  stage: build
+  tags:
+    - integration
+  script:
+    - mvn compile
+
+test_app:
+  stage: test
+  tags:
+    - integration
+  script:
+    - mvn test
+
+package_app:
+  stage: package
+  tags:
+    - integration
+  script:
+    - mvn package
+
+upload_app:
+  stage: upload
+  tags:
+    - integration
+  script:
+    - echo "Deploy review app"
+  artifacts:
+    name: "my-app"
+    paths:
+      - target/*.war
+
+deploy:
+  stage: deploy
+  tags:
+    - integration-shell
+  script:
+    - cp target/*.war /tomcat_data/
