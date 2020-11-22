@@ -1,0 +1,34 @@
+The following scenarios are taken straight from the original README.md.
+They are added here numbered for reference. But they should ideally be run
+alongside the creation of the pipeline as every step can be broken up into 
+useful scenarios for creating a functional development, building, testing
+and production suite.
+
+1.
+Checkpoint:
+~$ cat /proc/version
+You should see Ubuntu version 5.4.0 or newer.
+
+2.  
+Checkpoint: 
+Run the following commands: 
+~# gitlab-ctl show-config 
+~$ docker ps 
+You should see the gitlab configuration as well as a tomcat
+container running.
+
+3.
+Checkpoint:
+Change the README and watch appear in your browser.
+
+4.
+Checkpoint:
+Go to the GitLab repo under pipelines and the steps of your 
+pipeline should be green.
+
+5.
+Checkpoint:
+Open your browser and visit http://192.168.33.9:8888/.
+You should see our Hello-World app displayed.
+
+
