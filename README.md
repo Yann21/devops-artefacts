@@ -143,16 +143,21 @@ Let’s return to the IntTestProd environment: \
 `~# sudo gitlab-runner register`
 
 (The command will prompt you the following questions)
-> Enter the GitLab instance URL: \
+> Enter the GitLab instance URL
+
 http://192.168.33.9/gitlab/
-> Enter the registration token: \
+> Enter the registration token
+
 \<registration-token\> (can be found in the GitLab project, left pane, Settings,
 CI / CD; keep track of it for the next step)
-> Enter a description for the runner:
+> Enter a description for the runner
+
 docker
-> Enter tags for the runner:
+> Enter tags for the runner
+
 integration
-> Enter an executor:
+> Enter an executor
+
 docker
 > Enter the default Docker image:
 alpine:latest 
