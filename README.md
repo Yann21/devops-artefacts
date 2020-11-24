@@ -143,13 +143,10 @@ Let’s return to the IntTestProd environment: \
 `~# sudo gitlab-runner register`
 
 (The command will prompt you the following questions)
-> Enter the GitLab instance URL
-
-http://192.168.33.9/gitlab/
-> Enter the registration token
-
-\<registration-token\> (can be found in the GitLab project, left pane, Settings,
-CI / CD; keep track of it for the next step)
+> Enter the GitLab instance URL \
+http://192.168.33.9/gitlab/ \
+> Enter the registration token \
+\<registration-token\> (can be found in the GitLab project, left pane, Settings, CI / CD; keep track of it for the next step) \
 > Enter a description for the runner
 
 docker
