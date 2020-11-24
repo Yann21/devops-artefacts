@@ -143,18 +143,19 @@ Let’s return to the IntTestProd environment: \
 `~# sudo gitlab-runner register`
 
 (The command will prompt you the following questions)
+
 Enter the GitLab instance URL \
-\> http://192.168.33.9/gitlab/ \
+`> http://192.168.33.9/gitlab/` \
 Enter the registration token \
-\> \<registration-token\> (can be found in the GitLab project, left pane, Settings, CI / CD; keep track of it for the next step) \
+`> \<registration-token\>` (can be found in the GitLab project, left pane, Settings, CI / CD; keep track of it for the next step) \
 Enter a description for the runner \
-\> docker \
+`> docker` \
 Enter tags for the runner \
-\> integration \
+`> integration` \
 Enter an executor \
-\> docker \
+`> docker` \
 Enter the default Docker image: \
-\> alpine:latest
+`> alpine:latest`
 
 `~$ gitlab-runner start`
 
@@ -175,19 +176,20 @@ Staging runner registration  \
 `~$ cd /IntTestProd/` \
 `~$ vagrant ssh` \
 `~# gitlab-runner register` \
-(Almost the same as before) \
+(Almost the same as before)
+
 Enter the GitLab instance URL: \
-> http://192.168.33.9/gitlab/
+`> http://192.168.33.9/gitlab/` \
 Enter the registration token: \
-> <registration-token>
+`> <registration-token>` \
 Enter a description for the runner: \
-> shell
+`> shell`
 Enter tags for the runner: \
-> integration-shell
+`> integration-shell` \
 Enter an executor: \
-> shell
+`> shell` \
 Enter the default Docker image: \
-> alpine:latest 
+`> alpine:latest`
 
 `~# gitlab-runner start`
 
