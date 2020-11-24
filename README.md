@@ -1,5 +1,5 @@
 # Description
-The objective of the following steps is to create a deployment pipeline from
+The objective of this recipe is to create a deployment pipeline from
 scratch and bring our HelloWorld application from coding to production. The project
 in question will be deployed in the form of a WAR file on an Apache Tomcat7 server.
 
@@ -11,14 +11,14 @@ of coffee.
 Finally, the checkpoint sections are meant to help you ascertain the proper functioning of
 your environment. Feel free to skip them if you know what you are doing.
 
-## Conventions: 
+## Conventions
 If not specified `$paths` are to be understood as `$GIT_ROOT/$path`
 where `$GIT_ROOT` is where you have downloaded or unwrapped this repo.  
 `~$ <user-command>`\
 `~# <root-command>`
 
 
-Requirements before you start: \
+##Requirements before you start
 Vagrant 2.2.13 <= \
 Ansible 2.10.3 <= (uses Python 2.6) \
 Python 3.8 <=
@@ -33,7 +33,7 @@ Install with: \
 
 ## Create development environment 
 base install: 3 min with 3000kbps
-+ provisioning: 3 min \
+\+ provisioning: 3 min \
 `~$ cd DevEnv/` \
 `~$ vagrant up` \
 `~$ vagrant ssh`
@@ -42,7 +42,7 @@ base install: 3 min with 3000kbps
 `~$ cat /proc/version` \
 You should see Ubuntu version 5.4.0 or newer.
 
-## Vagrant Troubleshooting (skip if you passed the checkpoint) 
+## Vagrant Troubleshooting (skip if you have passed the previous checkpoint) 
 
 ### I can’t SSH into my machine 
 Try deactivating your ssh agent \
@@ -54,7 +54,7 @@ Try again
 Vagrant normally takes care of collisions. Were it to fail in this regard:
 1. Check for open ports on your machine:\
 `~# nmap localhost`
-2. Adapt the ports in Vagrantfile accordingly. For example:
+2. Adapt the ports in the Vagrantfile accordingly. For example:
 ```
 - 8080:8080
 + 8081:8080
@@ -84,10 +84,14 @@ also run automated testing.
 
 `~$ cd IntTestProdEnv/` \
 `~$ vagrant up` \
-`~$ vagrant ssh` \
+`~$ vagrant ssh`
+
 Edit the following file `/etc/gitlab/gitlab.rb` by changing: \
-    `external_url http://gitlab.example.com` into `external ‘http://192.168.33.9/gitlab` \ and 
-    `# unicorn[‘port’] = 8080` into `unicorn[‘port’] = 8088`
+`external_url http://gitlab.example.com` into \
+`external ‘http://192.168.33.9/gitlab`
+
+`# unicorn[‘port’] = 8080` into \
+`unicorn[‘port’] = 8088`
 
 `~$ gitlab-ctl reconfigure` \
 `~$ gitlab-ctl restart unicorn` \
@@ -96,11 +100,12 @@ Edit the following file `/etc/gitlab/gitlab.rb` by changing: \
 ## Checkpoint: 
 Run the following commands: \
 `~# gitlab-ctl show-config` \
-`~$ docker ps` \
+`~$ docker ps`
+
 You should see respectively the gitlab configuration as well as the tomcat container running.
 We will use it later for deployment.
 
-## Part I - Using GitLab as a VCS 
+## Using GitLab as a VCS (1/2)
 - Navigate to http://192.168.33.9/gitlab with your favorite browser.
 - Create an admin password. (To log in with the admin account use (root, `<your-password>`) as
 credentials.)
@@ -108,46 +113,49 @@ credentials.)
 - Log in with that user account.
 - Create a blank HelloWorld project by following the instructions on GitLab. Keep the project empty for next step.
 
-## Part II - Link DevEnv with CI server 
+## Link DevEnv with CI server (2/2)
 Armed with this empty GitLab project, go back to your DevEnv: \
 `~$ cd DevEnv/` \
 `[~$ vagrant up]` \
 `~$ vagrant ssh` \
-`~$ cd /vagrant_data/` \
+`~$ cd /vagrant_data/`
 
 You will now push the vagrant_data folder that contains the
 source code to your GitLab. To do so, go back to your browser and follow the
 instructions under “Push and existing folder \[to a remote\]”.  
 
 Your GitLab should now be storing the code directly created in your development 
-environment! \
-**Tip:** For quick modifications, use the `DevEnv/data/` folder instead of entering the
-virtual machine.
+environment!
+
+**Tip:** For lightning quick access, use the `DevEnv/data/` folder instead of booting up your
+ Dev Env.
 
 ## Checkpoint: 
-Add a blank line to `README.md` and watch the change take place in your browser.
+Add a blank line to `README.md` and watch the change take place in GitLab.
 
 ## CI runner registration 
 The last step is to add a runner to automatically build
-and test our code. \
+and test our code.
+
 Let’s return to the IntTestProd environment: \
 `~$ cd /IntTestProd/` \
 `~$ vagrant ssh` \
-`~# sudo gitlab-runner register` \
+`~# sudo gitlab-runner register`
+
 (The command will prompt you the following questions)
-Enter the GitLab instance URL: \
-> http://192.168.33.9/gitlab/
-Enter the registration token: \
-> <registration-token> (can be found in the GitLab project, left pane, Settings,
+> Enter the GitLab instance URL: \
+http://192.168.33.9/gitlab/
+> Enter the registration token: \
+\<registration-token\> (can be found in the GitLab project, left pane, Settings,
 CI / CD; keep track of it for the next step)
-Enter a description for the runner: \
-> docker
-Enter tags for the runner: \
-> integration
-Enter an executor: \
-> docker
-Enter the default Docker image: \
-> alpine:latest 
+> Enter a description for the runner:
+docker
+> Enter tags for the runner:
+integration
+> Enter an executor:
+docker
+> Enter the default Docker image:
+alpine:latest 
 
 `~$ gitlab-runner start`
 
