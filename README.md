@@ -1,53 +1,53 @@
 # Description
 The objective of the following steps is to create a deployment pipeline from
-scratch and bring our hello world project from coding to production. The project
-in question will be deployed in the form of a WAR file on an Apache Tomcat7.
+scratch and bring our HelloWorld application from coding to production. The project
+in question will be deployed in the form of a WAR file on an Apache Tomcat7 server.
 
 This guide should walk you through the installation of a deployment pipeline as
 painlessly as possible with mosts steps already automated in various scripts.
 The procedure will nonetheless take a good two hours so feel free to grab a cup
 of coffee.
 
-The checkpoint section are there to help you ascertain the proper replication of
+Finally, the checkpoint sections are there to help you ascertain the proper functioning of
 the environment. Feel free to skip them if you know what you are doing.
 
 ## Conventions: 
-If not specified $paths are to be understood as $GIT_ROOT/$path
-where $GIT_ROOT is where you have downloaded or unpackaged this repo.  
-~$ <user-command> 
-~# <root-command>
+If not specified `$paths` are to be understood as `$GIT_ROOT/$path`
+where `$GIT_ROOT` is where you have downloaded or unwrapped this repo.  
+`~$ <user-command>`\
+`~# <root-command>`
 
 
-Requirements before you start: 
-Vagrant 2.2.13 <= 
-Ansible 2.10.3 <= (uses Python 2.6) 
-Python 3.8 <= 
-Ansible extra plugin for Docker: community.general 
+Requirements before you start: \
+Vagrant 2.2.13 <= \
+Ansible 2.10.3 <= (uses Python 2.6) \
+Python 3.8 <= \
 
-Install with 
-~:$ ansible-galaxy collection install community.general 
-16GB of RAM is recommended ( /!\ proceed without at your own risk)
+Ansible extra plugin for Docker: `community.general` \
+Install with:
+`~:$ ansible-galaxy collection install community.general` \
+16GB of RAM is recommended ( :warning: proceed with less at your own risk)
 
 
 # 1. Development Environment
 
 ## Create development environment 
-base install: 6 min with 1500kbps
+base install: 3 min with 3000kbps
 + provisioning: 3 min 
-~$ cd DevEnv/ 
-~$ vagrant up 
-~$ vagrant ssh
+`~$ cd DevEnv/` \
+`~$ vagrant up` \
+`~$ vagrant ssh` \
 
 ## Checkpoint: 
-~$ cat /proc/version 
+`~$ cat /proc/version` \
 You should see Ubuntu version 5.4.0 or newer.
 
 ## Vagrant Troubleshooting (skip if you passed the checkpoint) 
 
 ### I can’t SSH into my machine 
-Try deactivating your ssh agent 
-Temporarily move ~/.ssh to ~/.ssh.bak 
-Try again
+Try deactivating your ssh agent \
+Temporarily move `~/.ssh` to `~/.ssh.tmp`  \
+Try again \
  
 
 ### Port collision 
