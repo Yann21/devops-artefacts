@@ -203,6 +203,6 @@ Tomcat is now able to run our war artifacts freshly out of the CI assembly line.
 
 ## Checkpoint: 
 Open your browser and visit http://192.168.33.9:8888/.  
-You should see our Hello-World app displayed!  
+You should see our HelloWorld app displayed!  
 
-Thanks for making it until the end.
+Thanks for making it to the end.
